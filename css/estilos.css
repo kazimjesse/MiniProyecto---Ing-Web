@@ -1,0 +1,182 @@
+/* ===== Estilos globales ===== */
+body {                                      
+    font-family: Arial, sans-serif;
+    background: #f0f2f5;
+    margin: 0;
+    padding: 30px;
+    text-align: center;
+}
+
+header {
+    background-color: #007bff;
+    color: white;
+    padding: 20px 0;
+}
+
+.menu {
+    margin: 40px auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 20px;
+    width: 80%;
+}
+
+.boton {
+    background-color: #007bff;
+    color: white;
+    padding: 15px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background 0.3s;
+}
+
+.boton:hover {
+    background-color: #0056b3;
+}
+
+h2 {
+    color: #333;
+}
+
+/* ===== Formulario ===== */
+.formulario {
+    background: white;
+    display: inline-block;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+    margin-top: 20px;
+}
+
+.formulario input[type="number"] {
+    width: 100px;
+    margin: 5px;
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.formulario input[type="submit"] {
+    margin-top: 15px;
+    padding: 10px 20px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.formulario input[type="submit"]:hover {
+    background: #0056b3;
+}
+
+/* ===== Resultados ===== */
+.resultado {
+    margin-top: 25px;
+    background: #fff;
+    display: inline-block;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+    text-align: left;
+}
+
+.resultado p {
+    margin: 5px 0;
+}
+
+.resultado h3 {
+    color: #007bff;
+    margin-bottom: 10px;
+}
+
+.resultado strong {
+    color: #222;
+    font-weight: bold;
+}
+
+/* ===== Enlace Volver ===== */
+.btn-volver {
+    display: inline-block;
+    padding: 10px 15px;
+    background: #007bff;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    margin-top: 30px;
+    font-weight: bold;
+}
+
+.btn-volver:hover {
+    background: #0056b3;
+}
+
+/* ===== Mensajes de error ===== */
+.error {
+    color: red;
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+/* ===== Footer ===== */
+footer {
+    background-color: #333;
+    color: white;
+    padding: 15px 0;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+}
+
+/* ===== transición suave para botones ===== */
+input[type="submit"], .btn-volver {
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+input[type="submit"]:hover, .btn-volver:hover {
+    transform: scale(1.05);
+}
+
+.formulario, .resultado {
+    margin-bottom: 30px;
+}
+
+/* ===== estilo para la lista de múltiplos ===== */
+.lista-multiplos {
+    text-align: left;
+    display: inline-block;
+    margin-top: 10px;
+    padding-left: 20px;
+    line-height: 1.6;
+}
+
+.lista-multiplos li {
+    list-style-type: "• ";
+    color: #333;
+}
+
+/* ===== estilo específico para resultados de sumas ===== */
+.resultado p {
+    font-size: 1.1em;
+    margin: 8px 0;
+}
+
+.resultado strong {
+    color: #0056b3;
+}
+
+/* ===== estilos para la gráfica ===== */
+.grafico {
+    margin: 30px auto;
+    width: 60%;
+    text-align: center;
+}
+
+.grafico canvas {
+    background: #fafafa;
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    padding: 10px;
+}
