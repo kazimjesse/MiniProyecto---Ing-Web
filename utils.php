@@ -36,5 +36,45 @@ class Utils {
     public static function enlaceVolver($url) {
         return "<p><a href='$url' class='btn-volver'>⬅ Volver al menú</a></p>";
     }
+     /* =====================  NUEVAS UTILIDADES  ===================== */
+
+    /** Float (acepta coma o punto decimal) */
+    public static function esFloat(string $s): bool {
+        $s = trim($s);
+        return (bool) preg_match('/^-?\d+([.,]\d+)?$/', $s);
+    }
+
+    /** Rango entero [min, max] */
+    public static function rangoInt(int $v, int $min, int $max): bool {
+        return $v >= $min && $v <= $max;
+    }
+
+    /** Rango float [min, max] */
+    public static function rangoFloat(float $v, float $min, float $max): bool {
+        return $v >= $min && $v <= $max;
+    }
+
+    /** Fecha ISO yyyy-mm-dd */
+    public static function fechaISO(string $s): bool {
+        if (!preg_match('/^\d{4}-\d{2}-\d{2}$/', $s)) return false;
+        [$y,$m,$d] = array_map('intval', explode('-', $s));
+        return checkdate($m, $d, $y);
+    }
+
+    /** Formateo numérico con separadores (por defecto 2 decimales) */
+    public static function numero(float|int $v, int $dec = 2): string {
+        return number_format($v, $dec, '.', ',');
+    }
+
+    /** Dinero en USD */
+    public static function dinero(float $v): string {
+        return '$' . number_format($v, 2, '.', ',');
+    }
+
+    /** Fecha dd-mm desde ISO */
+    public static function fechaDM(string $iso): string {
+        $ts = strtotime($iso);
+        return date('d-m', $ts);
+    }
 }
 ?>
