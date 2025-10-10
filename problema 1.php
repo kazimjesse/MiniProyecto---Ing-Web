@@ -18,9 +18,14 @@ function enlaceVolver($url) {
 
     <form method="post" class="formulario">
         <p>Introduce 5 números positivos:</p>
-        <?php for ($i = 1; $i <= 5; $i++): ?>
-            <input type="number" name="num[]" min="1" required placeholder="Num <?php echo $i; ?>"><br>
-        <?php endfor; ?>
+
+        <div class="campos-entrada">
+
+            <?php for ($i = 1; $i <= 5; $i++): ?>
+                <input type="number" name="num[]" min="1" required placeholder="Num <?php echo $i; ?>"><br>
+            <?php endfor; ?>
+
+         </div>
         <input type="submit" value="Calcular">
     </form>
 

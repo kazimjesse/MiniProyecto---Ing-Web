@@ -1,182 +1,197 @@
-/* ===== Estilos globales ===== */
-body {                                      
-    font-family: Arial, sans-serif;
-    background: #f0f2f5;
+/* ================================== */
+/* 1. Estilos Base           */
+/* ================================== */
+body {
+    /* Fuente de sistema limpia y profesional */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f7f9; /* Gris claro suave */
+    color: #333;
     margin: 0;
-    padding: 30px;
+    padding: 0;
     text-align: center;
+    line-height: 1.6;
+    /* Relleno para que el contenido no quede pegado al footer */
+    /*padding-bottom: 70px;*/ 
 }
 
+/* Contenedor principal para limitar el ancho del contenido */
+.contenedor {
+    max-width: 1100px;
+    margin: 0 auto; /* Centrar el contenedor en la página */
+    padding: 20px;
+}
+
+/* ================================== */
+/* 2. Encabezado (Header)    */
+/* ================================== */
 header {
-    background-color: #007bff;
+    background-color: #1a73e8; /* Azul más vibrante (Estilo Google/Moderno) */
     color: white;
-    padding: 20px 0;
+    padding: 30px 0;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Sombra sutil */
 }
 
+header h1 {
+    margin: 0;
+    font-size: 2.2em;
+    font-weight: 300; /* Fuente ligeramente más delgada */
+}
+
+/* ================================== */
+/* 3. Menú de Botones     */
+/* ================================== */
 .menu {
-    margin: 40px auto;
+    /* Quitar el margin de body y centralizar solo aquí */
+    margin: 40px auto; 
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    /* Adaptable: 3 columnas si hay espacio, sino se adapta */
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); 
     gap: 20px;
-    width: 80%;
+    padding: 20px;
+    /* Nuevo: Contenedor con fondo blanco y sombra sutil */
+    background: white; 
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08); 
 }
 
 .boton {
-    background-color: #007bff;
+    background-color: #4285f4; /* Azul de botones */
     color: white;
-    padding: 15px;
-    border-radius: 8px;
+    padding: 18px 10px;
+    border-radius: 6px;
     text-decoration: none;
-    font-weight: bold;
-    transition: background 0.3s;
+    font-weight: 600; /* Semi-bold para el texto */
+    font-size: 1.1em;
+    text-align: center;
+    /* Transición más detallada */
+    transition: background-color 0.3s ease, transform 0.1s ease, box-shadow 0.3s ease; 
 }
 
 .boton:hover {
-    background-color: #0056b3;
+    background-color: #3367d6; /* Azul oscuro al pasar el ratón */
+    transform: translateY(-3px); /* Efecto de "levantamiento" */
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2); /* Sombra más pronunciada al hacer hover */
 }
 
-h2 {
-    color: #333;
+.boton:active {
+    transform: translateY(-1px); /* Efecto de "clic" */
 }
 
-/* ===== Formulario ===== */
-.formulario {
+
+/* ================================== */
+/* 4. Formulario y Resultado */
+/* ================================== */
+
+/* Aplicar un estilo de 'tarjeta' limpio y uniforme */
+.formulario, .resultado {
     background: white;
     display: inline-block;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
-    margin-top: 20px;
+    padding: 30px;
+    border-radius: 12px; /* Bordes más suaves */
+    /* Sombra uniforme para todas las 'tarjetas' */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1); 
+    margin-top: 25px;
+    text-align: left;
+    max-width: 90%;
 }
 
 .formulario input[type="number"] {
-    width: 100px;
-    margin: 5px;
-    padding: 6px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    width: 120px; 
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    text-align: center;
+    transition: border-color 0.3s;
+}
+
+.formulario input[type="number"]:focus {
+    border-color: #4285f4; /* Resaltar al enfocar */
+    box-shadow: 0 0 5px rgba(66, 133, 244, 0.5);
+    outline: none;
 }
 
 .formulario input[type="submit"] {
-    margin-top: 15px;
-    padding: 10px 20px;
-    background: #007bff;
+    padding: 12px 25px;
+    background: #1a73e8; /* Mismo azul del header */
     color: white;
     border: none;
-    border-radius: 8px;
+    border-radius: 6px;
     cursor: pointer;
-    font-weight: bold;
+    font-weight: 600;
+    transition: background 0.3s ease, transform 0.1s ease;
 }
 
 .formulario input[type="submit"]:hover {
-    background: #0056b3;
+    background: #0d47a1;
+    transform: translateY(-1px);
 }
 
-/* ===== Resultados ===== */
-.resultado {
-    margin-top: 25px;
-    background: #fff;
-    display: inline-block;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
-    text-align: left;
+/* ================================== */
+/* 5. Footer y Volver        */
+/* ================================== */
+footer {
+    background-color: #333;
+    color: #bbb; /* Gris claro para texto de footer */
+    padding: 18px 0;
+    /* Footer fijo en la parte inferior */
+    bottom: 0;
+    width: 100%;
+    height: auto;
+    z-index: 1000; /* Asegurar que esté por encima de otros elementos */
 }
 
-.resultado p {
-    margin: 5px 0;
-}
-
-.resultado h3 {
-    color: #007bff;
-    margin-bottom: 10px;
-}
-
-.resultado strong {
-    color: #222;
-    font-weight: bold;
-}
-
-/* ===== Enlace Volver ===== */
+/* Estilos de botones de navegación (Volver) */
 .btn-volver {
     display: inline-block;
-    padding: 10px 15px;
-    background: #007bff;
+    padding: 12px 20px;
+    background: #6c757d; /* Gris oscuro para acción secundaria */
     color: white;
     text-decoration: none;
-    border-radius: 5px;
+    border-radius: 6px;
     margin-top: 30px;
-    font-weight: bold;
+    font-weight: 600;
+    transition: background 0.3s, transform 0.1s;
 }
 
 .btn-volver:hover {
-    background: #0056b3;
+    background: #5a6268;
+    transform: translateY(-1px);
 }
 
-/* ===== Mensajes de error ===== */
-.error {
-    color: red;
-    font-weight: bold;
-    margin-top: 15px;
+/* ================================== */
+/* 6. Estilos Adicionales   */
+/* ================================== */
+
+h2, .resultado h3 {
+    color: #1a73e8; /* Coherencia con el color principal */
 }
 
-/* ===== Footer ===== */
-footer {
-    background-color: #333;
-    color: white;
-    padding: 15px 0;
-    position: fixed;
-    bottom: 0;
-    width: 100%;
-}
-
-/* ===== transición suave para botones ===== */
-input[type="submit"], .btn-volver {
-    transition: background 0.3s ease, transform 0.2s ease;
-}
-
-input[type="submit"]:hover, .btn-volver:hover {
-    transform: scale(1.05);
-}
-
-.formulario, .resultado {
-    margin-bottom: 30px;
-}
-
-/* ===== estilo para la lista de múltiplos ===== */
-.lista-multiplos {
-    text-align: left;
-    display: inline-block;
-    margin-top: 10px;
-    padding-left: 20px;
-    line-height: 1.6;
-}
-
-.lista-multiplos li {
-    list-style-type: "• ";
-    color: #333;
-}
-
-/* ===== estilo específico para resultados de sumas ===== */
+/* Mejorar la legibilidad de los resultados */
 .resultado p {
-    font-size: 1.1em;
+    font-size: 1em;
     margin: 8px 0;
+    color: #444;
 }
 
 .resultado strong {
-    color: #0056b3;
+    color: #1a73e8; /* Resaltar resultados con el color primario */
+    font-weight: 700;
 }
 
-/* ===== estilos para la gráfica ===== */
-.grafico {
-    margin: 30px auto;
-    width: 60%;
-    text-align: center;
-}
-
-.grafico canvas {
-    background: #fafafa;
-    border: 1px solid #ddd;
-    border-radius: 12px;
-    padding: 10px;
+.campos-entrada {
+    /* Usar Flexbox para gestionar el espacio */
+    display: flex;
+    
+    /* CAMBIO CLAVE: Muestra los elementos en una columna (verticalmente) */
+    flex-direction: column; 
+    
+    /* Centrar el bloque de inputs dentro del formulario */
+    align-items: center; 
+    
+    /* AÑADIR SEPARACIÓN: Espacio entre los ítems (vertical) */
+    gap: 0.1px; /* Reducimos el espacio a 10px entre cada input */
+    
+    /* Espacio con el botón de abajo */
+    margin-bottom: 25px;
 }
