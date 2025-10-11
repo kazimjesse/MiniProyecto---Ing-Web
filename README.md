@@ -33,9 +33,9 @@ Grupo: 1SF-131
 
 Institución: Universidad Tecnológica de Panamá
 
-Estudiante 1
+Kazim Jesse
 
-correo1@utp.ac.pa
+kazim.jesse@utp.ac.pa
 
 Estudiante 2
 
