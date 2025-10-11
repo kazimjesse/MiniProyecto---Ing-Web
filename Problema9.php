@@ -3,10 +3,12 @@ declare(strict_types=1);
 require_once __DIR__ . '/utils.php';
 
 /* -------- Función P9 -------- */
-function p9_potencias(int $n, int $lim = 15): array {
-  $out = [];
-  for ($i=1; $i<= $lim; $i++) $out[$i] = $n ** $i;
-  return $out;
+function potenciasP9(int $n, int $lim = 15): array {
+    $out = [];
+    for ($i = 1; $i <= $lim; $i++) {
+        $out[$i] = $n ** $i;
+    }
+    return $out;
 }
 
 /* -------- Control -------- */
@@ -14,14 +16,17 @@ $numero = $_POST['numero'] ?? '';
 $errores = [];
 $data = [];
 
-if ($_SERVER['REQUEST_METHOD']==='POST') {
-  if ($numero === '' || Utils::esPositivo($numero) === false) {
-    $errores[] = 'Ingrese un entero positivo.';
-  } else {
-    $n = (int)$numero;
-    if (!Utils::rangoInt($n, 1, 9)) $errores[] = 'El número debe estar entre 1 y 9.';
-    else $data = p9_potencias($n, 15);
-  }
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    if ($numero === '' || Utils::esPositivo($numero) === false) {
+        $errores[] = 'Ingrese un entero positivo.';
+    } else {
+        $n = (int)$numero;
+        if (!Utils::rangoInt($n, 1, 9)) {
+            $errores[] = 'El número debe estar entre 1 y 9.';
+        } else {
+            $data = potenciasP9($n, 15);
+        }
+    }
 }
 ?>
 <!doctype html>
@@ -43,7 +48,11 @@ if ($_SERVER['REQUEST_METHOD']==='POST') {
   </form>
 
   <?php if ($errores): ?>
-    <div class="error"><?php foreach($errores as $e) echo '<div>'.Utils::limpiar($e).'</div>'; ?></div>
+    <div class="error">
+      <?php foreach ($errores as $e): ?>
+        <div><?= Utils::limpiar($e) ?></div>
+      <?php endforeach; ?>
+    </div>
   <?php endif; ?>
 
   <?php if ($data): ?>
@@ -51,11 +60,13 @@ if ($_SERVER['REQUEST_METHOD']==='POST') {
       <h3>Resultados</h3>
       <div class="table-wrap">
         <table class="tabla">
-          <thead><tr><th>Exponente</th><th>Resultado</th></tr></thead>
+          <thead>
+            <tr><th>Exponente</th><th>Resultado</th></tr>
+          </thead>
           <tbody>
-          <?php foreach ($data as $exp => $val): ?>
-            <tr><td><?= $exp ?></td><td><?= Utils::numero($val, 0) ?></td></tr>
-          <?php endforeach; ?>
+            <?php foreach ($data as $exp => $val): ?>
+              <tr><td><?= $exp ?></td><td><?= Utils::numero($val, 0) ?></td></tr>
+            <?php endforeach; ?>
           </tbody>
         </table>
       </div>
@@ -66,3 +77,4 @@ if ($_SERVER['REQUEST_METHOD']==='POST') {
   <?php include __DIR__ . '/footer.php'; ?>
 </body>
 </html>
+

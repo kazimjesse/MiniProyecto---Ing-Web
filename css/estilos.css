@@ -190,7 +190,7 @@ h2, .resultado h3 {
     align-items: center; 
     
     /* AÑADIR SEPARACIÓN: Espacio entre los ítems (vertical) */
-    gap: 0.1px; /* Reducimos el espacio a 10px entre cada input */
+    gap: 0.1px; /* Reducimos el espacio entre cada input */
     
     /* Espacio con el botón de abajo */
     margin-bottom: 25px;

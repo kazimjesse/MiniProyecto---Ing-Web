@@ -12,16 +12,16 @@
 
     <main class="contenedor">
         <div class="menu">
-            <a href="problema 1.php" class="boton">Problema 1</a>
-            <a href="problema 2.php" class="boton">Problema 2</a>
-            <a href="problema 3.php" class="boton">Problema 3</a>
-            <a href="problema 4.php" class="boton">Problema 4</a>
-            <a href="problema 5.php" class="boton">Problema 5</a>
-            <a href="problema 6.php" class="boton">Problema 6</a>
-            <a href="problema 7.php" class="boton">Problema 7</a>
-            <a href="problema 8.php" class="boton">Problema 8</a>
-            <a href="problema 9.php" class="boton">Problema 9</a>
-            <a href="problema 10.php" class="boton">Problema 10</a>
+            <a href="Problema1.php" class="boton">Problema 1</a>
+            <a href="Problema2.php" class="boton">Problema 2</a>
+            <a href="Problema3.php" class="boton">Problema 3</a>
+            <a href="Problema4.php" class="boton">Problema 4</a>
+            <a href="Problema5.php" class="boton">Problema 5</a>
+            <a href="Problema6.php" class="boton">Problema 6</a>
+            <a href="Problema7.php" class="boton">Problema 7</a>
+            <a href="Problema8.php" class="boton">Problema 8</a>
+            <a href="Problema9.php" class="boton">Problema 9</a>
+            <a href="Problema10.php" class="boton">Problema 10</a>
         </div>
     </main>
 

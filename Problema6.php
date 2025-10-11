@@ -3,12 +3,12 @@ declare(strict_types=1);
 require_once __DIR__ . '/utils.php';
 
 /* -------- Funciones P6 -------- */
-function p6_calcularDistribucion(float $presupuesto): array {
-  return [
-    'Ginecología'   => $presupuesto * 0.40,
-    'Traumatología' => $presupuesto * 0.35,
-    'Pediatría'     => $presupuesto * 0.25,
-  ];
+function calcularDistribucion(float $presupuesto): array {
+    return [
+        'Ginecología'   => $presupuesto * 0.40,
+        'Traumatología' => $presupuesto * 0.35,
+        'Pediatría'     => $presupuesto * 0.25,
+    ];
 }
 
 /* -------- Control -------- */
@@ -17,25 +17,31 @@ $errores = [];
 $resultados = [];
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-  if ($presupuesto === '' || !Utils::esFloat((string)$presupuesto) || (float)str_replace(',','.',(string)$presupuesto) <= 0) {
-    $errores[] = 'Ingrese un presupuesto válido (positivo).';
-  } else {
-    $pres = (float) str_replace(',', '.', (string)$presupuesto);
-    $resultados = p6_calcularDistribucion($pres);
-  }
+    if (
+        $presupuesto === '' || 
+        !Utils::esFloat((string)$presupuesto) || 
+        (float) str_replace(',', '.', (string)$presupuesto) <= 0
+    ) {
+        $errores[] = 'Ingrese un presupuesto válido (positivo).';
+    } else {
+        $presupuestoConvertido = (float) str_replace(',', '.', (string)$presupuesto);
+        $resultados = calcularDistribucion($presupuestoConvertido);
+    }
 }
 
-/* Datos para la gráfica (si hay resultados) */
-$p6_labels = [];
-$p6_montos = [];
-$p6_porcent = [];
+/* -------- Datos para la gráfica -------- */
+$labels = [];
+$montos = [];
+$porcentajes = [];
+
 if ($resultados) {
-  $p6_labels  = array_keys($resultados);
-  $p6_montos  = array_values($resultados);
-  $total      = array_sum($p6_montos);
-  foreach ($p6_montos as $m) {
-    $p6_porcent[] = $total > 0 ? round(($m / $total) * 100, 2) : 0;
-  }
+    $labels = array_keys($resultados);
+    $montos = array_values($resultados);
+    $total = array_sum($montos);
+
+    foreach ($montos as $monto) {
+        $porcentajes[] = $total > 0 ? round(($monto / $total) * 100, 2) : 0;
+    }
 }
 ?>
 <!doctype html>
@@ -58,7 +64,11 @@ if ($resultados) {
   </form>
 
   <?php if ($errores): ?>
-    <div class="error"><?php foreach ($errores as $e) echo '<div>'.Utils::limpiar($e).'</div>'; ?></div>
+    <div class="error">
+      <?php foreach ($errores as $error): ?>
+        <div><?= Utils::limpiar($error) ?></div>
+      <?php endforeach; ?>
+    </div>
   <?php endif; ?>
 
   <?php if ($resultados): ?>
@@ -66,36 +76,39 @@ if ($resultados) {
       <h3>Distribución</h3>
       <div class="table-wrap">
         <table class="tabla">
-          <thead><tr><th>Área</th><th>Porcentaje</th><th>Monto</th></tr></thead>
+          <thead>
+            <tr><th>Área</th><th>Porcentaje</th><th>Monto</th></tr>
+          </thead>
           <tbody>
             <tr><td>Ginecología</td><td>40%</td><td><?= Utils::dinero($resultados['Ginecología']) ?></td></tr>
             <tr><td>Traumatología</td><td>35%</td><td><?= Utils::dinero($resultados['Traumatología']) ?></td></tr>
             <tr><td>Pediatría</td><td>25%</td><td><?= Utils::dinero($resultados['Pediatría']) ?></td></tr>
           </tbody>
-          <tfoot><tr><th>Total</th><th>100%</th><th><?= Utils::dinero(array_sum($resultados)) ?></th></tr></tfoot>
+          <tfoot>
+            <tr><th>Total</th><th>100%</th><th><?= Utils::dinero(array_sum($resultados)) ?></th></tr>
+          </tfoot>
         </table>
       </div>
 
       <!-- Gráfica -->
       <div class="grafico">
-        <canvas id="p6Chart"></canvas>
+        <canvas id="chartPresupuesto"></canvas>
       </div>
     </div>
 
     <script>
-      // Datos desde PHP
-      const p6Labels   = <?= json_encode($p6_labels, JSON_UNESCAPED_UNICODE) ?>;
-      const p6Montos   = <?= json_encode($p6_montos) ?>;   // valores en dinero
-      const p6Porc     = <?= json_encode($p6_porcent) ?>;  // porcentajes
+      const labels = <?= json_encode($labels, JSON_UNESCAPED_UNICODE) ?>;
+      const montos = <?= json_encode($montos) ?>;
+      const porcentajes = <?= json_encode($porcentajes) ?>;
 
-      const ctx = document.getElementById('p6Chart');
+      const ctx = document.getElementById('chartPresupuesto');
       if (ctx) {
         new Chart(ctx, {
-          type: 'pie',   // Cambia a 'bar' si prefieres barras
+          type: 'pie',
           data: {
-            labels: p6Labels,
+            labels: labels,
             datasets: [{
-              data: p6Montos,         // usa montos reales; si prefieres %, cambia a p6Porc
+              data: montos,
               borderWidth: 1
             }]
           },
@@ -108,12 +121,11 @@ if ($resultados) {
               },
               tooltip: {
                 callbacks: {
-                  // tooltip muestra: Área — $monto (xx.xx%)
                   label: (ctx) => {
                     const monto = ctx.raw ?? 0;
-                    const total = p6Montos.reduce((a,b)=>a+b,0);
-                    const pct = total > 0 ? (monto/total)*100 : 0;
-                    return `${ctx.label}: $${monto.toLocaleString(undefined,{minimumFractionDigits:2, maximumFractionDigits:2})} (${pct.toFixed(2)}%)`;
+                    const total = montos.reduce((a, b) => a + b, 0);
+                    const porcentaje = total > 0 ? (monto / total) * 100 : 0;
+                    return `${ctx.label}: $${monto.toLocaleString(undefined, {minimumFractionDigits: 2, maximumFractionDigits: 2})} (${porcentaje.toFixed(2)}%)`;
                   }
                 }
               },
