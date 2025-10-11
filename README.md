@@ -37,9 +37,9 @@ Kazim Jesse
 
 kazim.jesse@utp.ac.pa
 
-Estudiante 2
+Jose Centella
 
-correo2@utp.ac.pa
+jose.centella1@utp.ac.pa
 
 ## 4. Diseño y Enfoque del Backend
 ### 4.1. Uso de Programación Orientada a Objetos (POO)
