@@ -36,7 +36,7 @@ class Utils {
     public static function enlaceVolver($url) {
         return "<p><a href='$url' class='btn-volver'>⬅ Volver al menú</a></p>";
     }
-     /* =====================  NUEVAS UTILIDADES  ===================== */
+     /* =====================  UTILIDADES  ===================== */
 
     /** Float (acepta coma o punto decimal) */
     public static function esFloat(string $s): bool {

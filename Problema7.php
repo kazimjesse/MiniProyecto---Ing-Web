@@ -1,118 +1,69 @@
 <?php
 declare(strict_types=1);
 require_once __DIR__ . '/utils.php';
-
-/* -------- Funciones P7 -------- */
-function calcularPromedioP7(array $valores): float {
-    return array_sum($valores) / max(1, count($valores));
-}
-
-function calcularDesviacionEstandarP7(array $valores): float {
-    $media = calcularPromedioP7($valores);
-    $suma = 0.0;
-    foreach ($valores as $valor) {
-        $suma += ($valor - $media) ** 2;
-    }
-    return sqrt($suma / max(1, count($valores))); // Poblacional
-}
-
-function obtenerMinimoP7(array $valores): float {
-    return (float) min($valores);
-}
-
-function obtenerMaximoP7(array $valores): float {
-    return (float) max($valores);
-}
+require_once __DIR__ . '/matematicas.php'; // 🔹 CAMBIO: se importa la nueva clase
 
 /* -------- Control -------- */
-$cantidad = $_POST['cantidad'] ?? '';
-$notas = $_POST['notas'] ?? [];
+$valores = $_POST['valores'] ?? [];
 $errores = [];
 $resultados = [];
-$notasValidas = [];
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['fase']) && $_POST['fase'] === 'generar') {
-    if ($cantidad === '' || Utils::esPositivo($cantidad) === false) {
-        $errores[] = 'La cantidad debe ser un entero positivo.';
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+  if (empty($valores)) {
+    $errores[] = 'Ingrese al menos un número.';
+  } else {
+    $validos = [];
+    foreach ($valores as $i => $v) {
+      if (!Utils::esFloat((string)$v)) {
+        $errores[] = "El valor #".($i+1)." no es válido.";
+      } else {
+        $validos[] = (float) str_replace(',', '.', (string)$v);
+      }
     }
-}
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_POST['fase'])) {
-    if ($cantidad === '' || Utils::esPositivo($cantidad) === false) {
-        $errores[] = 'La cantidad debe ser un entero positivo.';
-    } else {
-        for ($i = 0; $i < (int)$cantidad; $i++) {
-            $nota = $notas[$i] ?? '';
-            if ($nota === '' || !Utils::esFloat((string)$nota)) {
-                $errores[] = 'La nota #' . ($i + 1) . ' no es válida.';
-            } else {
-                $valor = (float) str_replace(',', '.', (string)$nota);
-                if (!Utils::rangoFloat($valor, 0.0, 100.0)) {
-                    $errores[] = 'La nota #' . ($i + 1) . ' debe estar entre 0 y 100.';
-                } else {
-                    $notasValidas[] = $valor;
-                }
-            }
-        }
-
-        if (empty($errores) && count($notasValidas) !== (int)$cantidad) {
-            $errores[] = 'Debe completar todas las notas.';
-        }
-
-        if (empty($errores)) {
-            $resultados = [
-                'Promedio'            => calcularPromedioP7($notasValidas),
-                'Desviación estándar' => calcularDesviacionEstandarP7($notasValidas),
-                'Mínima'              => obtenerMinimoP7($notasValidas),
-                'Máxima'              => obtenerMaximoP7($notasValidas),
-            ];
-        }
+    if (empty($errores) && $validos) {
+      // 🔹 CAMBIO: usamos la clase Matematicas en lugar de funciones locales
+      $resultados = [
+        'Promedio' => Matematicas::promedio($validos),
+        'Desviación estándar' => Matematicas::desviacionEstandar($validos),
+        'Mínimo' => Matematicas::minimo($validos),
+        'Máximo' => Matematicas::maximo($validos),
+      ];
     }
+  }
 }
 ?>
 <!doctype html>
 <html lang="es">
 <head>
   <meta charset="utf-8">
-  <title>Problema 7 — Estadística</title>
+  <title>Problema 1 — Estadística Básica</title>
   <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body class="problem">
 
-  <h2>Problema 7 — Calculadora de Datos Estadísticos</h2>
+  <h2>Problema 1 — Estadística Básica</h2>
 
-  <form method="post" class="formulario" novalidate>
-    <label>Cantidad de notas
-      <input type="number" name="cantidad" min="1" value="<?= Utils::limpiar((string)$cantidad) ?>">
+  <form method="post" class="formulario">
+    <label>Ingrese valores separados (hasta 5)
+      <input type="number" name="valores[]" step="0.01" required>
+      <input type="number" name="valores[]" step="0.01">
+      <input type="number" name="valores[]" step="0.01">
+      <input type="number" name="valores[]" step="0.01">
+      <input type="number" name="valores[]" step="0.01">
     </label>
-    <input type="submit" name="fase" value="generar">
+    <input type="submit" value="Calcular">
   </form>
 
-  <?php if ($errores && empty($resultados)): ?>
-    <div class="error">
-      <?php foreach ($errores as $error): ?>
-        <div><?= Utils::limpiar($error) ?></div>
-      <?php endforeach; ?>
-    </div>
-  <?php endif; ?>
-
-  <?php if ($cantidad && (!$resultados || $errores)): ?>
-    <form method="post" class="formulario" style="margin-top:10px">
-      <input type="hidden" name="cantidad" value="<?= (int)$cantidad ?>">
-      <?php for ($i = 0; $i < (int)$cantidad; $i++): ?>
-        <label>Nota <?= $i + 1 ?>
-          <input type="number" step="0.01" min="0" max="100" name="notas[]" required>
-        </label>
-      <?php endfor; ?>
-      <input type="submit" value="Calcular">
-    </form>
+  <?php if ($errores): ?>
+    <div class="error"><?php foreach($errores as $e) echo '<div>'.Utils::limpiar($e).'</div>'; ?></div>
   <?php endif; ?>
 
   <?php if ($resultados): ?>
     <div class="resultado">
       <h3>Resultados</h3>
-      <?php foreach ($resultados as $clave => $valor): ?>
-        <p><strong><?= Utils::limpiar($clave) ?>:</strong> <?= Utils::numero($valor) ?></p>
+      <?php foreach($resultados as $k => $v): ?>
+        <p><strong><?= Utils::limpiar($k) ?>:</strong> <?= Utils::numero($v, 2) ?></p>
       <?php endforeach; ?>
     </div>
   <?php endif; ?>
@@ -121,4 +72,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && !isset($_POST['fase'])) {
   <?php include __DIR__ . '/footer.php'; ?>
 </body>
 </html>
-

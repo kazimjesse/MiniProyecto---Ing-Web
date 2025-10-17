@@ -1,17 +1,32 @@
-/* ================================== */
-/* 1. Estilos Base           */
-/* ================================== */
+/*
+ * ==================================
+ * 1. Estilos Base y Layout 
+ * ==================================
+ */
+html, body {
+    /* 1. Asegura que el contenedor raíz use toda la altura de la ventana */
+    height: 100%;
+    margin: 0;
+}
+
 body {
     /* Fuente de sistema limpia y profesional */
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background-color: #f4f7f9; /* Gris claro suave */
     color: #333;
-    margin: 0;
     padding: 0;
-    text-align: center;
+    text-align: center; /* Centra el texto y elementos inline-block como el título */
     line-height: 1.6;
-    /* Relleno para que el contenido no quede pegado al footer */
-    /*padding-bottom: 70px;*/ 
+
+    /* 2. Define el body como contenedor flex vertical */
+    display: flex;
+    flex-direction: column;
+}
+
+/* El body con la clase 'problem' debe ocupar toda la altura de la ventana */
+body.problem { 
+    min-height: 100vh; 
+    padding-bottom: 80px; /* Mantiene un relleno inferior para el contenido */
 }
 
 /* Contenedor principal para limitar el ancho del contenido */
@@ -19,11 +34,15 @@ body {
     max-width: 1100px;
     margin: 0 auto; /* Centrar el contenedor en la página */
     padding: 20px;
+    /* Adición clave para Flexbox: permite que el contenido crezca y empuje el footer hacia abajo */
+    flex-grow: 1; 
 }
 
-/* ================================== */
-/* 2. Encabezado (Header)    */
-/* ================================== */
+/*
+ * ==================================
+ * 2. Encabezado (Header)    
+ * ==================================
+ */
 header {
     background-color: #1a73e8; /* Azul más vibrante (Estilo Google/Moderno) */
     color: white;
@@ -38,9 +57,11 @@ header h1 {
     font-weight: 300; /* Fuente ligeramente más delgada */
 }
 
-/* ================================== */
-/* 3. Menú de Botones     */
-/* ================================== */
+/*
+ * ==================================
+ * 3. Menú de Botones     
+ * ==================================
+ */
 .menu {
     /* Quitar el margin de body y centralizar solo aquí */
     margin: 40px auto; 
@@ -79,20 +100,22 @@ header h1 {
 }
 
 
-/* ================================== */
-/* 4. Formulario y Resultado */
-/* ================================== */
+/*
+ * ==================================
+ * 4. Formulario y Resultado
+ * ==================================
+ */
 
 /* Aplicar un estilo de 'tarjeta' limpio y uniforme */
 .formulario, .resultado {
     background: white;
-    display: inline-block;
+    display: block; /* Ahora es un bloque */
     padding: 30px;
     border-radius: 12px; /* Bordes más suaves */
     /* Sombra uniforme para todas las 'tarjetas' */
     box-shadow: 0 2px 8px rgba(0,0,0,0.1); 
-    margin-top: 25px;
-    text-align: left;
+    margin: 25px auto; /* Centra el bloque horizontalmente */
+    text-align: left; /* El contenido interno sigue alineado a la izquierda */
     max-width: 90%;
 }
 
@@ -127,18 +150,22 @@ header h1 {
     transform: translateY(-1px);
 }
 
-/* ================================== */
-/* 5. Footer y Volver        */
-/* ================================== */
+/*
+ * ==================================
+ * 5. Footer y Volver        
+ * ==================================
+ */
 footer {
     background-color: #333;
     color: #bbb; /* Gris claro para texto de footer */
     padding: 18px 0;
-    /* Footer fijo en la parte inferior */
-    bottom: 0;
     width: 100%;
-    height: auto;
-    z-index: 1000; /* Asegurar que esté por encima de otros elementos */
+    z-index: 1000; 
+
+    /* PROPIEDAD CLAVE PARA FIJAR CON FLEXBOX */
+    margin-top: auto; /* Empuja el footer hacia la parte inferior */
+    
+    /* Propiedades eliminadas: bottom: 0; (redundante) */
 }
 
 /* Estilos de botones de navegación (Volver) */
@@ -159,9 +186,11 @@ footer {
     transform: translateY(-1px);
 }
 
-/* ================================== */
-/* 6. Estilos Adicionales   */
-/* ================================== */
+/*
+ * ==================================
+ * 6. Estilos Adicionales   
+ * ==================================
+ */
 
 h2, .resultado h3 {
     color: #1a73e8; /* Coherencia con el color principal */
@@ -179,49 +208,44 @@ h2, .resultado h3 {
     font-weight: 700;
 }
 
+/* Estilos para formularios complejos */
 .campos-entrada {
     /* Usar Flexbox para gestionar el espacio */
     display: flex;
-    
-    /* CAMBIO CLAVE: Muestra los elementos en una columna (verticalmente) */
     flex-direction: column; 
-    
-    /* Centrar el bloque de inputs dentro del formulario */
     align-items: center; 
-    
-    /* AÑADIR SEPARACIÓN: Espacio entre los ítems (vertical) */
-    gap: 0.1px; /* Reducimos el espacio entre cada input */
-    
-    /* Espacio con el botón de abajo */
+    gap: 0.1px; 
     margin-bottom: 25px;
+}
 
-     .problem .btn {
-  background-color: #007bff;
-  color: #fff;
-  padding: 10px 16px;
-  border-radius: 8px;
-  text-decoration: none;
-  font-weight: bold;
-  border: none;
-  cursor: pointer;
-  display: inline-block;
-  transition: background 0.3s ease, transform 0.2s ease;
-  box-shadow: 0 2px 0 rgba(0,0,0,.06);
+.problem .btn {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 16px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    display: inline-block;
+    transition: background 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 2px 0 rgba(0,0,0,.06);
 }
 
 .problem .btn:hover { background: #0056b3; transform: scale(1.05); }
 
 .problem .form,
 .problem .formulario { /* por si alguno usa .formulario */
-  background: #fff;
-  display: inline-block;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0,0,0,.1);
-  margin-top: 20px;
-  text-align: left;
-  width: 100%;
-  max-width: 900px;
+    background: #fff;
+    display: block; /* Cambiado a block para centrado consistente */
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,.1);
+    margin: 20px auto; /* Centrado horizontal */
+    text-align: left;
+    width: 100%;
+    /* ANCHO REDUCIDO: Ajustado de 900px a 600px para hacerlo menos grande */
+    max-width: 600px; 
 }
 .problem .form label,
 .problem .formulario label { display:block; margin-bottom: 10px; font-weight: 600; }
@@ -235,12 +259,12 @@ h2, .resultado h3 {
 .problem .formulario input[type="date"],
 .problem .formulario select,
 .problem .formulario textarea {
-  width: 100%;
-  padding: 8px 10px;
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  background: #fff;
-  font-size: 1rem;
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background: #fff;
+    font-size: 1rem;
 }
 .problem .form textarea,
 .problem .formulario textarea { min-height: 160px; font-family: ui-monospace, Consolas, monospace; }
@@ -254,20 +278,20 @@ h2, .resultado h3 {
 @media (max-width: 720px) { .problem .grid-2, .problem .grid-3 { grid-template-columns: 1fr; } }
 
 .problem .card {
-  background:#fff; border:1px solid #e7e7ee; border-radius:16px;
-  padding: 20px; box-shadow:0 8px 24px rgba(0,0,0,.06); margin: 16px auto; max-width: 900px;
+    background:#fff; border:1px solid #e7e7ee; border-radius:16px;
+    padding: 20px; box-shadow:0 8px 24px rgba(0,0,0,.06); margin: 16px auto; max-width: 900px;
 }
 .problem .foto { width:100%; height:220px; object-fit:cover; border-radius:14px; margin-top:12px; }
 
 .problem .table-wrap { overflow-x: auto; }
 .problem .tabla {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 16px;
-  background: #fff;
-  border-radius: 12px;
-  overflow: hidden;
-  border: 1px solid #e7e7ee;
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 16px;
+    background: #fff;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #e7e7ee;
 }
 .problem .tabla th, .problem .tabla td { padding: 10px 12px; border: 1px solid #e7e7ee; }
 .problem .tabla th { background: #6f579a; color: #fff; text-align: center; }
@@ -277,7 +301,3 @@ h2, .resultado h3 {
 .problem .container { max-width: 1100px; margin: 0 auto; }
 .problem .center { text-align: center; }
 .problem .notice { margin: .7rem 0; color: #4b5563; }
-
-.problem body, body.problem { padding-bottom: 80px; } /* fallback si pones la clase en body */
-
-}
