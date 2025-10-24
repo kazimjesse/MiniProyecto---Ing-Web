@@ -22,14 +22,20 @@ function determinarEstacionP8(string $fechaIso): array {
     $dia = (int) date('j', $timestamp);
     $mesDia = $mes * 100 + $dia;
 
+    // En el hemisferio sur:
+    // - Verano: 21 dic – 20 mar
+    // - Otoño: 21 mar – 20 jun
+    // - Invierno: 21 jun – 20 sep
+    // - Primavera: 21 sep – 20 dic
+
     if ($mesDia >= 921 && $mesDia <= 1220) {
-        return ['Invierno', obtenerImagenP8('invierno')];
+        return ['Primavera', obtenerImagenP8('primavera')];
     } elseif ($mesDia >= 1221 || $mesDia <= 320) {
         return ['Verano', obtenerImagenP8('verano')];
     } elseif ($mesDia >= 321 && $mesDia <= 620) {
-        return ['Primavera', obtenerImagenP8('primavera')];
-    } else {
         return ['Otoño', obtenerImagenP8('otono')];
+    } else {
+        return ['Invierno', obtenerImagenP8('invierno')];
     }
 }
 

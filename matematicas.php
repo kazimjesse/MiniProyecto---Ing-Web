@@ -2,7 +2,7 @@
 declare(strict_types=1);
 
 /**
- * Biblioteca de funciones matemáticas comunes
+ * Biblioteca de funciones matemáticas 
  * Reutilizable por varios problemas
  */
 class Matematicas
@@ -19,7 +19,7 @@ class Matematicas
         foreach ($numeros as $n) {
             $suma += ($n - $media) ** 2;
         }
-        return sqrt($suma / max(1, count($numeros))); // poblacional
+        return sqrt($suma / max(1, count($numeros))); 
     }
 
     public static function minimo(array $numeros): float
